@@ -1,0 +1,119 @@
+#include<iostream.h>          
+#include<conio.h> 
+#include<stdlib.h> 
+random(int);
+char tic[3][3];
+int d,e,f,a,t,i,j,x,y; 
+void display();  
+void user();   
+void newdisp(); 
+void pc();
+int check(); 
+int horcheck(); 
+int vercheck();  
+int diagcheck(); 
+main()          
+{
+clrscr();     
+randomize();        
+int d=random(2);  
+for(i=0;i<3;i++)
+	for(j=0;j<3;j++)
+  	tic[i][j]=' ';    
+display();                 
+d==0?user():pc();             
+getch();                  
+return 0;      
+}
+void display()    
+{ for(t=0;t<3;t++)
+	{ 	cout<<"	"<<tic[t][0]<<" | "<<tic[t][1]<<" | "<<tic[t][2]<<endl;
+	    if(t!=2)
+	      cout<<"		--|---|--"<<endl;
+	}
+}
+void user()     
+{ cout<<"enter co-ordinates for 'X' i.e 0,1,2";
+  cin>>x>>y;
+  if((x<0)||(x>2)&&(y<0)||(y>2)) 
+	{	cout<<"wrong!!";		
+  	user();  
+	}
+else
+	{ 	if(tic[x][y]==' ') 
+		{		tic[x][y]='X';  
+		    newdisp();  
+		}
+	else
+		{		cout<<"filled position!!";	
+    		user(); 
+		}
+	}
+d=check();   
+if(d==0)
+pc();  
+else
+	{	cout<<"	winner ";	
+   	getche(); 
+  	exit(1);   
+	}
+}
+void newdisp()  
+{ for(t=0;t<3;t++)
+	{	cout<<"	"<<tic[t][0]<<" | "<<tic[t][1]<<" | "<<tic[t][2]<<endl;
+  	if(t!=2)
+	    cout<<"		--|---|--"<<endl;
+	}
+}
+void pc()       
+{
+int f,z;
+randomize();  
+cout<<"computer's move";
+for(i=0;i<=20;i++)
+	{ 	f=random(3);
+	    z=random(3);
+	    if(tic[f][z]==' ') 
+		  {		tic[f][z]='O'; 
+	      	goto x;   
+	  	}
+	else
+	  continue;           
+	}
+x:newdisp();      
+d=check();                  
+if(d==0)
+  user();               
+else
+	{	cout<<"	I'm the winner";	
+  	getche();   
+  	exit(1);    
+	}
+}
+check()    
+{ horcheck();    
+  vercheck();          
+  diagcheck();      
+  return (d||e||f);
+}
+horcheck()      
+{ if(((tic[0][0]==tic[0][1])&&(tic[0][1]==tic[0][2])&&(tic[0][1]!=''))||((tic[1][0]==tic[1][1])&&(tic[1][1]==tic[1][2])&&(tic[1][1]!=''))||((tic[2][0]==tic[2][1])&&(tic[2][1]==tic[2][2])&&(tic[2][2]!=' ')))
+    d=1;        
+  else          
+    d=0;                   
+  return d;
+}
+vercheck()        
+{ if(((tic[0][0]==tic[1][0])&&(tic[1][0]==tic[2][0])&&(tic[0][0]!=''))||((tic[0][1]==tic[1][1])&&(tic[1][1]==tic[2][1])&&(tic[0][1]!=''))||((tic[0][2]==tic[1][2])&&(tic[1][2]==tic[2][2])&&(tic[0][2]!=' ')))
+    e=1;                       
+  else            
+    e=0;                       
+  return e;
+}
+diagcheck()               
+{ if(((tic[0][0]==tic[1][1])&&(tic[1][1]==tic[2][2])&&(tic[0][0]!=''))||((tic[0][2]==tic[1][1])&&(tic[1][1]==tic[2][0])&&(tic[1][1]!='')))
+    f=1;               
+  else     
+    f=0;                      
+return f;
+}
